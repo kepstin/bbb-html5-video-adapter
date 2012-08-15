@@ -51,7 +51,12 @@ int main(int argc, char *argv[])
 
 	gss_config_load_defaults(server->config, config_defaults);
 
-	add_program(server, "rtmp://192.168.22.140/oflaDemo/avatar-vp6.flv");
+	/*
+	 * Temporary hack.
+	 * The final design will watch Redis for announcements of streams being
+	 * added or removed dynamically.
+	 */
+	add_program(server, "rtmp://192.168.22.140/oflaDemo/stream1343760817531 live=1");
 
 	loop = g_main_loop_new(NULL, TRUE);
 	

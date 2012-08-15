@@ -44,12 +44,13 @@ void gss_stream_create_bbb_video_pipeline(GssStream *stream)
 	g_string_append(pipe_desc, "rtmpsrc name=src do-timestamp=true ! ");
 
 	/*
-	 * We actually have to re-encode the video from Flash's VP6 to VP8
-	 * and re-mux it into a WebM container. Note that the BBB stream is
-	 * video-only; audio will be handled separately.
+	 * We actually have to re-encode the video from Flash's codec, which
+	 * may be any of H.263, VP6, or H.264 to VP8 and re-mux it into a WebM
+	 * container. Note that the BBB stream is video-only; audio will be
+	 * handled separately.
 	 */
-	g_string_append(pipe_desc, "flvdemux ! ffdec_vp6f ! ");
-	/* TODO: pick good encoding parameters */
+	g_string_append(pipe_desc, "decodebin ! ");
+	/* TODO: pick good encoding parameters for low latency */
 	g_string_append(pipe_desc, "vp8enc ! webmmux streamable=true ! ");
 
 	/* Is the parser actually needed? */
